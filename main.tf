@@ -37,3 +37,17 @@
     bucket = module.s3_bucket.bucket_id
     malicious_ip = module.compute.malicious_ip
   }
+
+module "guardduty_eventbridge_rule" {
+  source                          = "./modules/eventbridge"
+  sns_topic_arn                   = module.guardduty_sns_topic.sns_topic_arn
+  lambda_remediation_function_arn = module.lambda.lambda_remediation_function_arn
+}
+
+# CREATE THE LAMBDA FUNCTION
+module "lambda" {
+  source                  = "./modules/lambda"
+  sns_topic_arn           = module.guardduty_sns_topic.sns_topic_arn
+  compromised_instance_id = module.compute.compromised_instance_id
+  forensic_sg_id          = module.forensic-security-group.security_group_id
+}

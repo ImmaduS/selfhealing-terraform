@@ -1,14 +1,15 @@
-# lamba funtion to trigger action
+# A lambda funtion to trigger action
 data "aws_iam_policy_document" "" {
   statement {
     effect = "Allow"
-    action =["sts:AssumeRole"]
+    actions =["sts:AssumeRole"]
     principals {
       type = "Service"
       identifiers = [ "lambda.amazonaws.com" ]
     }
   }
 }
+# To create the policy for the lambda function
 resource "aws_iam_role_policy" "GD-EC2MaliciousIPCaller-inline-role-policy" {
   name = "GD-EC2MaliciousIPCaller-inline-role-policy"
   role = aws_iam_role.GD-Lambda-EC2MaliciousIPCaller-role.id
@@ -56,7 +57,7 @@ resource "aws_iam_role_policy" "GD-EC2MaliciousIPCaller-inline-role-policy" {
     ]
   })
 }
-
+# The iam role attached to the ppolicy
 resource "aws_iam_role" "GD-Lambda-EC2MaliciousIPCaller-role" {
   name               = "GD-Lambda-EC2MaliciousIPCaller-role1"
   assume_role_policy = data.aws_iam_policy_document.GD-EC2MaliciousIPCaller-policy-document.json
