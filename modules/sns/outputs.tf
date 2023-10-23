@@ -1,0 +1,1 @@
+# To define the output variables for the sns topic
