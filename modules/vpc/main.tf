@@ -1,1 +1,5 @@
-# The main configurations for the vpc.
+resource "aws_vpc" "vpc_name" {
+  
+  tags = {
+    Name =var.vpc_name}
+}
